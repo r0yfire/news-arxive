@@ -54,14 +54,13 @@ npx sls invoke local -f fetchPapers
 
 ## GPT-Pilot
 
-The following [GPT-Pilot](https://github.com/Pythagora-io/gpt-pilot) prompt was used to generate most of the code in this repository:
+The following [GPT-Pilot](https://github.com/Pythagora-io/gpt-pilot) **prompt** was used to generate most of the code in this repository:
 
-```markdown
-Create an app that will look for new research papers every day, and send me summaries for each via email. This app does not have a web interface, it is executed using the command line. The final app is expected to run in a serverless environment, such as AWS Lambda.
+>Create an app that will look for new research papers every day, and send me summaries for each via email. This app does not have a web interface, it is executed using the command line. The final app is expected to run in a serverless environment, such as AWS Lambda.
+>
+>The app, when run, will load an RSS feed from a URL defined as the environment variable `RSS_FEED_URL`. The app will then look to find new entries in the XML-formatted RSS feed by comparing the URL in each entry (e.g. `<link>https://arxiv.org/abs/2403.07916</link>`) with our database. The database is a simple JSON file stored on S3.
+>
+>For new entries, the app will replace the substring `/abs/` with `/pdf/` in the URL, open the URL to download the binary file (PDF format), convert the PDF to Markdown, create a prompt to summarize the contents (with details and examples), send the summary request to OpenAI’s GPT-4, and email the results to an email address defined as the environment variable `EMAIL_ADDRESS`. The final email for each entry should contain the detailed summary, a link to the original PDF, and the email subject should be the paper title.
+>
+>The default RSS feed URL is: `https://rss.arxiv.org/rss/cs.ai`.
 
-The app, when run, will load an RSS feed from a URL defined as the environment variable `RSS_FEED_URL`. The app will then look to find new entries in the XML-formatted RSS feed by comparing the URL in each entry (e.g. `<link>https://arxiv.org/abs/2403.07916</link>`) with our database. The database is a simple JSON file stored on S3.
-
-For new entries, the app will replace the substring `/abs/` with `/pdf/` in the URL, open the URL to download the binary file (PDF format), convert the PDF to Markdown, create a prompt to summarize the contents (with details and examples), send the summary request to OpenAI’s GPT-4, and email the results to an email address defined as the environment variable `EMAIL_ADDRESS`. The final email for each entry should contain the detailed summary, a link to the original PDF, and the email subject should be the paper title.
-
-The default RSS feed URL is: `https://rss.arxiv.org/rss/cs.ai`.
-```
