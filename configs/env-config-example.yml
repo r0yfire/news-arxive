@@ -1,0 +1,21 @@
+ENV: ${self:custom.stage}
+STAGE: ${self:custom.stage}
+STAGE_NAME: ${self:custom.stage}
+REGION: ${self:custom.region}
+
+## S3 Bucket
+S3_BUCKET: 'my-bucket-name'
+
+## OpenAI API
+OPENAI_API_KEY: "sk-xxxx"
+OPENAI_ORG_ID: "org-xxxx"
+
+## RSS Feed URL
+RSS_FEED_URL: 'https://rss.arxiv.org/rss/cs.ai'
+
+## Who to send emails to
+EMAIL_ADDRESS: 'roy@example.com'
+
+## The following are for SMTP authentication
+EMAIL_USER: 'user@example.com'
+EMAIL_PASSWORD: 'password'
