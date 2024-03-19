@@ -28,10 +28,7 @@ async function fetchAndParseRSS() {
       link: entry.link,
     }));
 
-    // Slice to a maximum of 10 entries
-    const filteredEntries = formattedEntries.slice(0, 10);
-
-    return filteredEntries;
+    return formattedEntries;
   } catch (error) {
     console.error('Failed to fetch or parse RSS feed:', error.message, error.stack);
     throw error; // Rethrow to allow caller handling

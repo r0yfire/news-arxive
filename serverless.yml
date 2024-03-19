@@ -30,7 +30,7 @@ provider:
   tags:
     service: ${self:custom.service}
     Environment: ${opt:stage, 'dev'}
-  timeout: 10
+  timeout: 900
   memorySize: 256
   versionFunctions: false
   environment:
@@ -58,7 +58,8 @@ functions:
   scanPapers:
     handler: handler.scanPapers
     events:
-      - schedule: rate(1 day)
+      # Every day at 9:00 AM UTC
+      - schedule: cron(0 9 * * ? *)
 
 # Infrastructure (CloudFormation)
 resources:

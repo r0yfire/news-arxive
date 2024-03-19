@@ -44,12 +44,24 @@ Deploy to production:
 npx sls deploy --verbose --stage prod
 ```
 
+Invoke the function (on AWS):
+
+```bash
+npx sls invoke --function scanPapers --stage prod
+```
+
+View logs:
+
+```bash
+npx sls logs --function scanPapers --stage prod
+```
+
 ### Invoke locally
 
 Execute the following command to invoke the function locally:
 
 ```bash
-npx sls invoke local -f fetchPapers
+npx sls invoke local -f scanPapers -s prod
 ```
 
 ## GPT-Pilot

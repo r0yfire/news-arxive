@@ -26,7 +26,7 @@ async function sendEmail(subject, summaryContent, pdfLink) {
       from: process.env.EMAIL_USER, // Sender address
       to: emailAddress, // Recipient address, for demonstration purposes it's the same as sender
       subject: subject, // Subject line
-      html: `<p>${summaryContent}</p><p>Original PDF Link: <a href="${pdfLink}">${pdfLink}</a></p>`, // HTML body
+      html: `<div>${summaryContent}</div><div><p><b>Original Paper Link</b>:<br/><a href="${pdfLink}">${pdfLink}</a></p></div>`, // HTML body
     };
 
     // Send email
