@@ -10,6 +10,9 @@ S3_BUCKET: 'my-bucket-name'
 OPENAI_API_KEY: "sk-xxxx"
 OPENAI_ORG_ID: "org-xxxx"
 
+## Anthropic API
+ANTHROPIC_API_KEY: "sk-xxxx"
+
 ## RSS Feed URL
 RSS_FEED_URL: 'https://rss.arxiv.org/rss/cs.ai'
 
@@ -19,3 +22,8 @@ EMAIL_ADDRESS: 'roy@example.com'
 ## The following are for SMTP authentication
 EMAIL_USER: 'user@example.com'
 EMAIL_PASSWORD: 'password'
+
+## LangChain
+LANGCHAIN_TRACING_V2: "true"
+LANGCHAIN_PROJECT: "news-arxiv"
+LANGCHAIN_API_KEY: ""
