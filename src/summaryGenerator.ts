@@ -1,4 +1,5 @@
-import {ChatOpenAI} from "@langchain/openai";
+import {ChatVertexAI} from '@langchain/google-vertexai';
+import {HarmBlockThreshold, HarmCategory} from '@google/generative-ai';
 import {ChatAnthropic} from '@langchain/anthropic';
 import {ChatPromptTemplate} from '@langchain/core/prompts';
 import {sendEmail} from '@/src/emailSender';
@@ -27,16 +28,26 @@ async function generateSummary(markdownContent: string): Promise<string> {
         console.log("Generating summary for provided Markdown content.");
 
         const tokens = countTokens(markdownContent);
-        const llm = (tokens > 100000) ?
-            new ChatAnthropic({model: 'claude-3-opus-20240229', maxTokens: 4000, temperature: 0.4}) :
-            new ChatOpenAI({model: 'gpt-4-turbo', maxTokens: 4000, temperature: 0.4});
+        const llm = (tokens < 180000) ?
+            new ChatAnthropic({model: 'claude-3-opus-20240229', maxTokens: 4000, temperature: 0.2}) :
+            new ChatVertexAI({
+                model: 'gemini-1.5-pro-preview-0409',
+                maxOutputTokens: 4000,
+                temperature: 0.2,
+                safetySettings: [
+                    {
+                        category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+                        threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
+                    },
+                ],
+            });
 
         const prompt = 'You are an expert researcher in the field of AI and have been asked to summarize a research paper. ' +
             'Make sure you capture the key ideas, experiments and findings from the paper. ' +
             'Avoid using academic jargon and keep the summary concise and easy to understand. ' +
             'You can assume the reader has a basic understanding of AI concepts. ' +
             'Also include your opinion on the paper. ' +
-            'Lastly, provide a short analysis of whether the research is applicable to Autohost. ' +
+            'Lastly, provide a short analysis of whether the research is applicable to Autohost or not. ' +
             'Autohost is a company that provides identity verification and fraud detection solutions using AI. ' +
             'Some example projects Autohost is interested in include:\n' +
             '- Using LLMs to review fraud telemetry with user-submitted information to find inconsistencies.\n' +

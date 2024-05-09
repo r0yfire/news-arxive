@@ -4,7 +4,7 @@ import {downloadAndConvertPDFToText} from './pdfConverter';
 import {generateAndSendSummary} from './summaryGenerator';
 import type {Entry} from './rssFeedParser';
 
-const MAX_ENTRIES = 5;
+const MAX_ENTRIES = 6;
 
 async function processEntries(): Promise<void> {
     let counter = 0;
@@ -35,7 +35,13 @@ async function processEntries(): Promise<void> {
                 // Process entry
                 console.log(`Processing new entry: ${entry.title}`);
                 const pdfUrl = entry.link.replace('/abs/', '/pdf/') + '.pdf'; // appending '.pdf' as per arXiv convention
-                const pdfContent = await downloadAndConvertPDFToText(pdfUrl);
+                let pdfContent = '';
+                try {
+                    pdfContent = await downloadAndConvertPDFToText(pdfUrl);
+                } catch (error: any) {
+                    console.error(`Error processing PDF content for entry: ${entry.title}`, error.message, error.stack);
+                    continue;
+                }
                 await generateAndSendSummary(pdfContent, entry.title, pdfUrl);
                 await updateDatabase(entry.link);
                 counter++;

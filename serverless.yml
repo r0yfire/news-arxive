@@ -20,7 +20,9 @@ custom:
     concurrency: 10
     externals:
       - js-tiktoken
-      - markdown-it
+    copyFiles:
+      - from: "configs/sound-oasis-273416-5d9b85a69966.json"
+        to: "./"
 
 plugins:
   - serverless-bundle

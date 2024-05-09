@@ -13,6 +13,9 @@ OPENAI_ORG_ID: "org-xxxx"
 ## Anthropic API
 ANTHROPIC_API_KEY: "sk-xxxx"
 
+## Google API
+GOOGLE_APPLICATION_CREDENTIALS: "xxx.json"
+
 ## RSS Feed URL
 RSS_FEED_URL: 'https://rss.arxiv.org/rss/cs.ai'
 
